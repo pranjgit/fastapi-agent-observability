@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }} · Observability</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <style>
+    body{font:14px system-ui,sans-serif;max-width:1200px;margin:2rem auto;padding:0 1rem;color:#17202a}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #ddd}
+    a{color:#1458a6}.status{font-weight:600}.error{color:#b42318}.success{color:#067647}
+    .muted{color:#667085}
+  </style>
+</head>
+<body>
+  <h1>{{ app_name }} · Observability</h1>
+  <p class="muted">Recent root traces. Inputs and outputs may contain sensitive data.</p>
+  <table>
+    <thead><tr><th>Name</th><th>Status</th><th>Started</th><th>Latency</th><th>Trace ID</th></tr></thead>
+    <tbody>
+    {% for trace in traces %}
+      <tr>
+        <td><a href="{{ request.url.path }}/traces/{{ trace.id }}">{{ trace.name }}</a></td>
+        <td class="status {{ trace.status }}">{{ trace.status }}</td>
+        <td>{{ trace.started_at or "—" }}</td>
+        <td>{{ "%.1f ms"|format(trace.latency_ms) if trace.latency_ms is not none else "—" }}</td>
+        <td><code>{{ trace.trace_id }}</code></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No traces recorded yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ trace.name }} · {{ app_name }}</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <style>
+    body{font:14px system-ui,sans-serif;max-width:1200px;margin:2rem auto;padding:0 1rem;color:#17202a}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #ddd}
+    pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:1rem;border-radius:8px}
+    .error{color:#b42318}.muted{color:#667085}
+  </style>
+</head>
+<body>
+  <p><a href="{{ request.url.path.rsplit('/traces/', 1)[0] }}">← All traces</a></p>
+  <h1>{{ trace.name }}</h1>
+  <p>Status: <strong class="{{ trace.status }}">{{ trace.status }}</strong> ·
+     Latency: {{ "%.1f ms"|format(trace.latency_ms) if trace.latency_ms is not none else "—" }}</p>
+  {% if trace.error %}<h2>Error</h2><pre>{{ trace.error }}</pre>{% endif %}
+  <h2>Execution hierarchy</h2>
+  <table>
+    <thead><tr><th>Run</th><th>Type</th><th>Status</th><th>Parent</th><th>Latency</th></tr></thead>
+    <tbody>
+    {% for run in runs %}
+      <tr><td>{{ run.name }}</td><td>{{ run.run_type }}</td><td>{{ run.status }}</td>
+      <td>{{ run.parent_run_id or "—" }}</td>
+      <td>{{ "%.1f ms"|format(run.latency_ms) if run.latency_ms is not none else "—" }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <h2>Inputs</h2><pre>{{ trace.inputs_json or "—" }}</pre>
+  <h2>Outputs</h2><pre>{{ trace.outputs_json or "—" }}</pre>
+</body>
+</html>
