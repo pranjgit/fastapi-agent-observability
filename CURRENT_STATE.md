@@ -7,6 +7,7 @@
 ## 1. Status Overview
 
 - **Current Version**: `0.1.0` (MVP Status)
+- **License**: Apache 2.0 (`LICENSE`)
 - **Virtual Environment**: Located at `../.env` (Python 3.12)
 - **Test Suite Status**: 100% passing (`4 passed, 0 failures`)
 - **Package Installation**: Installed in editable mode with `[dev]` dependencies
