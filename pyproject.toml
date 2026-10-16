@@ -9,6 +9,34 @@ description = "Embeddable local-first tracing dashboard for FastAPI, LangChain, 
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
+authors = [
+  { name = "Pranjal", email = "pranj3006@gmail.com" }
+]
+keywords = [
+  "fastapi",
+  "observability",
+  "tracing",
+  "telemetry",
+  "langchain",
+  "langgraph",
+  "agents",
+  "llm",
+  "dashboard",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: FastAPI",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: System :: Monitoring",
+  "Typing :: Typed",
+]
 dependencies = [
   "fastapi>=0.110",
   "sqlalchemy>=2.0",
@@ -16,10 +44,21 @@ dependencies = [
   "python-multipart>=0.0.9",
 ]
 
+[project.urls]
+Homepage = "https://github.com/pranjgit/fastapi-agent-observability"
+Repository = "https://github.com/pranjgit/fastapi-agent-observability"
+Issues = "https://github.com/pranjgit/fastapi-agent-observability/issues"
+
 [project.optional-dependencies]
 langchain = ["langchain-core>=0.2"]
 postgres = ["psycopg[binary]>=3.1"]
-dev = ["pytest>=8.0", "httpx>=0.27", "ruff>=0.5"]
+dev = [
+  "pytest>=8.0",
+  "httpx>=0.27",
+  "ruff>=0.5",
+  "build>=1.0",
+  "twine>=5.0",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/fastapi_agent_observability"]

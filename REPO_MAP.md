@@ -9,6 +9,7 @@
 ### Non-Python Assets & Templates
 - [`src/fastapi_agent_observability/dashboard/templates/index.html`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/dashboard/templates/index.html) (1421 bytes)
 - [`src/fastapi_agent_observability/dashboard/templates/trace_detail.html`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/dashboard/templates/trace_detail.html) (1614 bytes)
+- [`src/fastapi_agent_observability/py.typed`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/py.typed) (65 bytes)
 
 ### Python Modules & Symbol Index
 
