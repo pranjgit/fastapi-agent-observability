@@ -1,7 +1,9 @@
 """Minimal demo host FastAPI application to verify fastapi-agent-observability."""
 
 import sys
+
 from fastapi import FastAPI, Header, HTTPException, Query
+
 from fastapi_agent_observability import Observability, ObservabilityConfig
 
 app = FastAPI(title="Demo Host App with Observability")

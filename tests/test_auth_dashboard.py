@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.testclient import TestClient
+
 from fastapi_agent_observability import Observability, ObservabilityConfig
 
 

@@ -7,7 +7,6 @@ Saves the result to REPO_MAP.md to drastically reduce token consumption for AI a
 """
 
 import ast
-import os
 from pathlib import Path
 
 

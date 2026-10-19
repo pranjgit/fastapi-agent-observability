@@ -1,11 +1,12 @@
 import inspect
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import select, desc
+from sqlalchemy import desc, select
 
 from .config import ObservabilityConfig
 from .storage.database import Database

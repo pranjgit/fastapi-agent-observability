@@ -1,11 +1,13 @@
 import contextvars
+import inspect
 import json
 import time
 import uuid
+from collections.abc import Callable
 from contextlib import AbstractContextManager
 from datetime import datetime, timezone
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
 from ..config import ObservabilityConfig
 from ..storage.database import Database
@@ -97,6 +99,15 @@ class Tracer:
 
     def trace(self, name: str, run_type: str = "chain"):
         def decorator(fn: Callable):
+            if inspect.iscoroutinefunction(fn):
+                @wraps(fn)
+                async def async_wrapper(*args, **kwargs):
+                    with self.start_run(name, run_type, {"args": args, "kwargs": kwargs}) as run:
+                        result = await fn(*args, **kwargs)
+                        run.set_outputs(result)
+                        return result
+                return async_wrapper
+
             @wraps(fn)
             def wrapper(*args, **kwargs):
                 with self.start_run(name, run_type, {"args": args, "kwargs": kwargs}) as run:

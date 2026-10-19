@@ -9,7 +9,7 @@
 - **Current Version**: `0.1.0` (MVP Status)
 - **License**: Apache 2.0 (`LICENSE`)
 - **Virtual Environment**: Located at `../.env` (Python 3.12)
-- **Test Suite Status**: 100% passing (`4 passed, 0 failures`)
+- **Test Suite Status**: 100% passing (`13 passed, 0 failures`)
 - **Package Installation**: Installed in editable mode with `[dev]` dependencies
 
 ---
@@ -22,9 +22,10 @@
 | **Extension & Router** | [`src/.../extension.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/extension.py) | ✅ Complete | `Observability` class mounting `/admin/observability`, `get_current_user` auth, sync/async `is_admin`, `/traces/{run_id}`, `/api/traces`. |
 | **Database Engine** | [`src/.../storage/database.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/storage/database.py) | ✅ Complete | SQLite cross-thread support (`check_same_thread=False`), session context manager. |
 | **ORM Models** | [`src/.../storage/models.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/storage/models.py) | ✅ Complete | `RunRecord` with composite indexes on `(trace_id, started_at)`, `(parent_run_id, started_at)`, `(status, started_at)`. |
-| **Tracer & RunHandle** | [`src/.../tracing/recorder.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/tracing/recorder.py) | ✅ Complete | Python `contextvars` context propagation, latency calculation, payload truncation, safe silent persistence errors. |
+| **Tracer & RunHandle** | [`src/.../tracing/recorder.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/tracing/recorder.py) | ✅ Complete | Python `contextvars` context propagation, latency calculation, payload truncation, safe silent persistence errors, sync and async `@obs.tracer.trace` decorator support. |
 | **LangChain Callback** | [`src/.../tracing/langchain.py`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/tracing/langchain.py) | ✅ Complete | `ObservabilityCallbackHandler` capturing chains, tools, LLMs, chat models. |
 | **Dashboard UI** | [`src/.../dashboard/templates/`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/src/fastapi_agent_observability/dashboard/templates/) | ✅ Complete | Jinja2 templates (`index.html`, `trace_detail.html`) powered by HTMX 2.0. |
+| **Sample FastAPI App** | [`examples/sample_app/`](file:///home/pranjal/projects/fastapi-agent-observability/fastapi-agent-observability/examples/sample_app/) | ✅ Complete | Complete reference app with interactive test UI, research/math/failure agents, auth matrix, `.env`, and automated tests (`test_sample_app.py`). |
 
 ---
 

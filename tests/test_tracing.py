@@ -1,4 +1,3 @@
-import time
 from fastapi_agent_observability import Observability, ObservabilityConfig
 
 
@@ -20,6 +19,7 @@ def test_manual_trace_persists_success(tmp_path):
         root.set_outputs({"answer": "world"})
 
     from sqlalchemy import select
+
     from fastapi_agent_observability.storage.models import RunRecord
     with obs.database.session() as session:
         rows = session.scalars(select(RunRecord)).all()
@@ -40,8 +40,52 @@ def test_manual_trace_records_error_and_reraises(tmp_path):
     except ValueError:
         pass
     from sqlalchemy import select
+
     from fastapi_agent_observability.storage.models import RunRecord
     with obs.database.session() as session:
         row = session.scalars(select(RunRecord)).one()
     assert row.status == "error"
     assert "bad input" in row.error
+
+
+def test_trace_decorator_sync(tmp_path):
+    obs = make_obs(tmp_path)
+
+    @obs.tracer.trace("sync_task", run_type="tool")
+    def do_work(x: int):
+        return {"result": x * 2}
+
+    output = do_work(21)
+    assert output == {"result": 42}
+
+    from sqlalchemy import select
+
+    from fastapi_agent_observability.storage.models import RunRecord
+    with obs.database.session() as session:
+        row = session.scalars(select(RunRecord)).one()
+    assert row.name == "sync_task"
+    assert row.run_type == "tool"
+    assert row.status == "success"
+    assert '"result": 42' in row.outputs_json
+
+
+def test_trace_decorator_async(tmp_path):
+    import asyncio
+    obs = make_obs(tmp_path)
+
+    @obs.tracer.trace("async_task", run_type="chain")
+    async def do_async_work(name: str):
+        return f"hello, {name}"
+
+    output = asyncio.run(do_async_work("world"))
+    assert output == "hello, world"
+
+    from sqlalchemy import select
+
+    from fastapi_agent_observability.storage.models import RunRecord
+    with obs.database.session() as session:
+        row = session.scalars(select(RunRecord)).one()
+    assert row.name == "async_task"
+    assert row.run_type == "chain"
+    assert row.status == "success"
+    assert "hello, world" in row.outputs_json
